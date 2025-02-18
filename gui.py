@@ -91,9 +91,10 @@ class SudokuGUI:
                 self.entries[i][j].config(state="normal", font=('Arial', 18), fg="black")
         self.fixed_cells.clear()
 
-    def load_example(self):
-        """Load a sample Sudoku puzzle."""
-        example_board = [
+def load_random_example(self):
+    """Load a random sample Sudoku puzzle."""
+    examples = [
+        [
             [5, 3, 0, 0, 7, 0, 0, 0, 0],
             [6, 0, 0, 1, 9, 5, 0, 0, 0],
             [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -103,11 +104,47 @@ class SudokuGUI:
             [0, 6, 0, 0, 0, 0, 2, 8, 0],
             [0, 0, 0, 4, 1, 9, 0, 0, 5],
             [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ],
+        [
+            [0, 0, 0, 2, 6, 0, 7, 0, 1],
+            [6, 8, 0, 0, 7, 0, 0, 9, 0],
+            [1, 9, 0, 0, 0, 4, 5, 0, 0],
+            [8, 2, 0, 1, 0, 0, 0, 4, 0],
+            [0, 0, 4, 6, 0, 2, 9, 0, 0],
+            [0, 5, 0, 0, 0, 3, 0, 2, 8],
+            [0, 0, 9, 3, 0, 0, 0, 7, 4],
+            [0, 4, 0, 0, 5, 0, 0, 3, 6],
+            [7, 0, 3, 0, 1, 8, 0, 0, 0]
+        ],
+        [
+            [0, 2, 0, 6, 0, 8, 0, 0, 0],
+            [5, 8, 0, 0, 0, 9, 7, 0, 0],
+            [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            [3, 7, 0, 0, 0, 0, 5, 0, 0],
+            [6, 0, 0, 0, 0, 0, 0, 0, 4],
+            [0, 0, 8, 0, 0, 0, 0, 1, 3],
+            [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 9, 8, 0, 0, 0, 3, 6],
+            [0, 0, 0, 3, 0, 6, 0, 9, 0]
         ]
-        for i in range(9):
-            for j in range(9):
-                self.entries[i][j].delete(0, tk.END)
-                if example_board[i][j] != 0:
-                    self.entries[i][j].insert(0, str(example_board[i][j]))
-                    self.entries[i][j].config(state="disabled", font=('Arial', 18, 'bold'), fg="blue")
-                    self.fixed_cells.add((i, j))
+    ]
+
+    # Choose a random board from the examples list
+    import random
+    example_board = random.choice(examples)
+
+    # Clear any existing numbers and fixed cell markings
+    self.fixed_cells.clear()
+    for i in range(9):
+        for j in range(9):
+            self.entries[i][j].config(state="normal", font=('Arial', 18), fg="black")
+            self.entries[i][j].delete(0, tk.END)
+    
+    # Update the GUI with the selected board
+    for i in range(9):
+        for j in range(9):
+            if example_board[i][j] != 0:
+                self.entries[i][j].insert(0, str(example_board[i][j]))
+                self.entries[i][j].config(state="disabled", font=('Arial', 18, 'bold'), fg="blue")
+                self.fixed_cells.add((i, j))
+
