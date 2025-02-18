@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from solver import solve  # Import the solve function from solver.py
+import random
 
 class SudokuGUI:
     def __init__(self, root):
@@ -42,8 +43,8 @@ class SudokuGUI:
         reset_btn = tk.Button(button_frame, text="Reset", command=self.reset_board, font=("Arial", 14), bg="#dc3545", fg="white", width=8)
         reset_btn.grid(row=0, column=1, padx=10)
 
-        example_btn = tk.Button(button_frame, text="Example", command=self.load_random_example, font=("Arial", 14), bg="#007bff", fg="white", width=8)
-        example_btn.grid(row=0, column=2, padx=10)
+        randomize_btn = tk.Button(button_frame, text="Randomize", command=self.load_random_example, font=("Arial", 14), bg="#007bff", fg="white", width=8)
+        randomize_btn.grid(row=0, column=2, padx=10)
 
     def validate_input(self, event):
         """Ensure only numbers (1-9) are entered and clear invalid input."""
@@ -91,60 +92,58 @@ class SudokuGUI:
                 self.entries[i][j].config(state="normal", font=('Arial', 18), fg="black")
         self.fixed_cells.clear()
 
-def load_random_example(self):
-    """Load a random sample Sudoku puzzle."""
-    examples = [
-        [
-            [5, 3, 0, 0, 7, 0, 0, 0, 0],
-            [6, 0, 0, 1, 9, 5, 0, 0, 0],
-            [0, 9, 8, 0, 0, 0, 0, 6, 0],
-            [8, 0, 0, 0, 6, 0, 0, 0, 3],
-            [4, 0, 0, 8, 0, 3, 0, 0, 1],
-            [7, 0, 0, 0, 2, 0, 0, 0, 6],
-            [0, 6, 0, 0, 0, 0, 2, 8, 0],
-            [0, 0, 0, 4, 1, 9, 0, 0, 5],
-            [0, 0, 0, 0, 8, 0, 0, 7, 9]
-        ],
-        [
-            [0, 0, 0, 2, 6, 0, 7, 0, 1],
-            [6, 8, 0, 0, 7, 0, 0, 9, 0],
-            [1, 9, 0, 0, 0, 4, 5, 0, 0],
-            [8, 2, 0, 1, 0, 0, 0, 4, 0],
-            [0, 0, 4, 6, 0, 2, 9, 0, 0],
-            [0, 5, 0, 0, 0, 3, 0, 2, 8],
-            [0, 0, 9, 3, 0, 0, 0, 7, 4],
-            [0, 4, 0, 0, 5, 0, 0, 3, 6],
-            [7, 0, 3, 0, 1, 8, 0, 0, 0]
-        ],
-        [
-            [0, 2, 0, 6, 0, 8, 0, 0, 0],
-            [5, 8, 0, 0, 0, 9, 7, 0, 0],
-            [0, 0, 0, 0, 4, 0, 0, 0, 0],
-            [3, 7, 0, 0, 0, 0, 5, 0, 0],
-            [6, 0, 0, 0, 0, 0, 0, 0, 4],
-            [0, 0, 8, 0, 0, 0, 0, 1, 3],
-            [0, 0, 0, 0, 2, 0, 0, 0, 0],
-            [0, 0, 9, 8, 0, 0, 0, 3, 6],
-            [0, 0, 0, 3, 0, 6, 0, 9, 0]
+    def load_random_example(self):
+        """Load a random sample Sudoku puzzle."""
+        examples = [
+            [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+            ],
+            [
+                [0, 0, 0, 2, 6, 0, 7, 0, 1],
+                [6, 8, 0, 0, 7, 0, 0, 9, 0],
+                [1, 9, 0, 0, 0, 4, 5, 0, 0],
+                [8, 2, 0, 1, 0, 0, 0, 4, 0],
+                [0, 0, 4, 6, 0, 2, 9, 0, 0],
+                [0, 5, 0, 0, 0, 3, 0, 2, 8],
+                [0, 0, 9, 3, 0, 0, 0, 7, 4],
+                [0, 4, 0, 0, 5, 0, 0, 3, 6],
+                [7, 0, 3, 0, 1, 8, 0, 0, 0]
+            ],
+            [
+                [0, 2, 0, 6, 0, 8, 0, 0, 0],
+                [5, 8, 0, 0, 0, 9, 7, 0, 0],
+                [0, 0, 0, 0, 4, 0, 0, 0, 0],
+                [3, 7, 0, 0, 0, 0, 5, 0, 0],
+                [6, 0, 0, 0, 0, 0, 0, 0, 4],
+                [0, 0, 8, 0, 0, 0, 0, 1, 3],
+                [0, 0, 0, 0, 2, 0, 0, 0, 0],
+                [0, 0, 9, 8, 0, 0, 0, 3, 6],
+                [0, 0, 0, 3, 0, 6, 0, 9, 0]
+            ]
         ]
-    ]
 
-    # Choose a random board from the examples list
-    import random
-    example_board = random.choice(examples)
+        # Choose a random board from the examples list
+        example_board = random.choice(examples)
 
-    # Clear any existing numbers and fixed cell markings
-    self.fixed_cells.clear()
-    for i in range(9):
-        for j in range(9):
-            self.entries[i][j].config(state="normal", font=('Arial', 18), fg="black")
-            self.entries[i][j].delete(0, tk.END)
-    
-    # Update the GUI with the selected board
-    for i in range(9):
-        for j in range(9):
-            if example_board[i][j] != 0:
-                self.entries[i][j].insert(0, str(example_board[i][j]))
-                self.entries[i][j].config(state="disabled", font=('Arial', 18, 'bold'), fg="blue")
-                self.fixed_cells.add((i, j))
-
+        # Clear any existing numbers and fixed cell markings
+        self.fixed_cells.clear()
+        for i in range(9):
+            for j in range(9):
+                self.entries[i][j].config(state="normal", font=('Arial', 18), fg="black")
+                self.entries[i][j].delete(0, tk.END)
+        
+        # Update the GUI with the selected board
+        for i in range(9):
+            for j in range(9):
+                if example_board[i][j] != 0:
+                    self.entries[i][j].insert(0, str(example_board[i][j]))
+                    self.entries[i][j].config(state="disabled", font=('Arial', 18, 'bold'), fg="blue")
+                    self.fixed_cells.add((i, j))
