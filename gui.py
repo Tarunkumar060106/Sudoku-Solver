@@ -42,7 +42,7 @@ class SudokuGUI:
         reset_btn = tk.Button(button_frame, text="Reset", command=self.reset_board, font=("Arial", 14), bg="#dc3545", fg="white", width=8)
         reset_btn.grid(row=0, column=1, padx=10)
 
-        example_btn = tk.Button(button_frame, text="Example", command=self.load_example, font=("Arial", 14), bg="#007bff", fg="white", width=8)
+        example_btn = tk.Button(button_frame, text="Example", command=self.load_random_example, font=("Arial", 14), bg="#007bff", fg="white", width=8)
         example_btn.grid(row=0, column=2, padx=10)
 
     def validate_input(self, event):
