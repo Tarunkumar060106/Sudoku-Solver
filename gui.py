@@ -8,7 +8,7 @@ class SudokuGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Sudoku Solver")
-        self.root.geometry("400x500")
+        self.root.geometry("500x550")
         self.root.configure(bg="#f8f9fa")
         
         self.entries = [[None for _ in range(9)] for _ in range(9)]
@@ -20,9 +20,18 @@ class SudokuGUI:
         frame = tk.Frame(self.root, bg="#f8f9fa")
         frame.pack(pady=10)
 
+        # Define two colors for alternating 3x3 subgrids
+        color1 = "white"
+        color2 = "#e6e6e6"  # light gray
+
         for i in range(9):
             for j in range(9):
-                e = tk.Entry(frame, width=3, font=('Arial', 18), justify='center', bg="white")
+                # Determine the subgrid's position
+                box_x, box_y = j // 3, i // 3
+                # Alternate the background color based on the subgrid
+                bg_color = color1 if (box_x + box_y) % 2 == 0 else color2
+
+                e = tk.Entry(frame, width=3, font=('Arial', 18), justify='center', bg=bg_color)
                 e.grid(row=i, column=j, padx=2, pady=2, ipady=5)
                 e.bind("<KeyRelease>", self.validate_input)
                 self.entries[i][j] = e
@@ -45,6 +54,7 @@ class SudokuGUI:
 
         randomize_btn = tk.Button(button_frame, text="Randomize", command=self.load_random_example, font=("Arial", 14), bg="#007bff", fg="white", width=8)
         randomize_btn.grid(row=0, column=2, padx=10)
+
 
     def validate_input(self, event):
         """Ensure only numbers (1-9) are entered and clear invalid input."""
